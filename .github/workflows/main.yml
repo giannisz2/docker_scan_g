@@ -22,9 +22,14 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Install Docker Scout
+        run: |
+          curl -sSL https://github.com/docker/scout-cli/releases/download/v0.0.11/scout-linux-amd64-0.0.11.tar.gz | tar xz
+          mv scout /usr/local/bin/
+
       - name: Pull and Scan Docker Image
         run: |
-          docker scout quickscan nginx:latest --format sarif > scan-results.sarif
+          docker scout quickscan nginx:latest > scan-results.txt
 
       - name: Upload Scan Results
         uses: github/codeql-action/upload-sarif@v2
