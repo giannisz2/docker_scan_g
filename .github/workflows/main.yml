@@ -33,8 +33,7 @@ jobs:
           scout quickscan nginx:latest > scan-results.txt
 
       - name: Upload Scan Results as Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: docker-scan-results
           path: scan-results.txt
-
