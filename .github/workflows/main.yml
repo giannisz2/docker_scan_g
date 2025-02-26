@@ -24,8 +24,8 @@ jobs:
 
       - name: Install Docker Scout
         run: |
-          curl -sSL https://github.com/docker/scout-cli/releases/download/v0.0.11/scout-linux-amd64-0.0.11.tar.gz | tar xz
-          mv scout /usr/local/bin/
+          curl -sSL https://github.com/docker/scout-cli/releases/download/v0.0.12/scout-linux-amd64-0.0.12 -o /usr/local/bin/scout
+          chmod +x /usr/local/bin/scout
 
       - name: Pull and Scan Docker Image
         run: |
