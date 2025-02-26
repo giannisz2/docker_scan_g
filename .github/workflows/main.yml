@@ -32,8 +32,9 @@ jobs:
         run: |
           scout quickscan nginx:latest > scan-results.txt
 
-      - name: Upload Scan Results as Artifact
-        uses: actions/upload-artifact@v2
+      - name: Upload Scan Results
+        uses: github/codeql-action/upload-sarif@v2
         with:
+          sarif_file: scan-results.sarif
           name: docker-scan-results
           path: scan-results.txt
