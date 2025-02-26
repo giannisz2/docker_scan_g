@@ -29,7 +29,7 @@ jobs:
 
       - name: Pull and Scan Docker Image
         run: |
-          docker scout quickscan nginx:latest > scan-results.txt
+          scout quickscan nginx:latest > scan-results.txt
 
       - name: Upload Scan Results
         uses: github/codeql-action/upload-sarif@v2
