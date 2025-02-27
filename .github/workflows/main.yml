@@ -28,16 +28,11 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh
           sh install-scout.sh
           
-          # Verify installation by checking if the 'scout' command is available
-          which scout || echo "scout is not found"
-          
-          # Check the version of docker-scout to ensure it's installed correctly
-          scout --version || echo "scout command failed to run"
 
       - name: Pull and Scan Docker Image
         run: |
           # Run the scout quickscan command and output results in SARIF format
-          scout quickscan nginx:latest --format sarif > scan-results.sarif
+          docker scout quickscan nginx:latest --format sarif > scan-results.sarif
 
       - name: Upload Scan Results as SARIF
         uses: github/codeql-action/upload-sarif@v2
