@@ -28,12 +28,6 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh
           sh install-scout.sh
           
-          # Verify installation by checking if the 'docker scout' command is available
-          which docker || echo "docker is not found"
-          which docker-scout || echo "docker-scout is not found"
-          
-          # Check the version of docker-scout to ensure it's installed correctly
-          docker scout --version || echo "docker scout command failed to run"
 
       - name: Pull and Scan Docker Image for CVEs
         run: |
