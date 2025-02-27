@@ -27,21 +27,14 @@ jobs:
           # Download and install Docker Scout using the official installation script
           curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh
           sh install-scout.sh
-          
-          # Verify installation by checking if the 'docker scout' command is available
-          which docker || echo "docker is not found"
-          which docker-scout || echo "docker-scout is not found"
-          
-          # Check the version of docker-scout to ensure it's installed correctly
-          docker scout version || echo "docker scout command failed to run"
 
-      - name: Pull and Scan Docker Image
+      - name: Pull and Scan Docker Image for CVEs
         run: |
-          # Run the docker scout quickscan command and output results in SARIF format
-          docker scout quickscan nginx:latest --format sarif > scan-results.sarif
+          # Run the docker scout cves command to display CVEs in the image
+          docker scout cves nginx:latest > scan-results.txt
 
-      - name: Upload Scan Results as SARIF
+      - name: Upload Scan Results
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: scan-results.sarif
+          sarif_file: scan-results.txt
           name: docker-scan-results
