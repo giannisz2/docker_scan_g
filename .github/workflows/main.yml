@@ -22,30 +22,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      name: Docker Scout Vulnerability Scan
-
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch: # Allows manual triggering
-
-jobs:
-  security_scan:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Log in to DockerHub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
       - name: Install Docker Scout (v1.16.1)
         run: |
           # Create the directory if it doesn't exist
@@ -62,22 +38,11 @@ jobs:
 
       - name: Pull and Scan Docker Image
         run: |
-          scout quickscan nginx:latest > scan-results.txt
+          # Run the scout quickscan command and output results in SARIF format
+          scout quickscan nginx:latest --format sarif > scan-results.sarif
 
-      - name: Upload Scan Results as Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: docker-scan-results
-          path: scan-results.txt
-
-
-      - name: Pull and Scan Docker Image
-        run: |
-          scout quickscan nginx:latest > scan-results.txt
-
-      - name: Upload Scan Results
+      - name: Upload Scan Results as SARIF
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: scan-results.sarif
           name: docker-scan-results
-          path: scan-results.txt
