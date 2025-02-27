@@ -33,7 +33,7 @@ jobs:
           which docker-scout || echo "docker-scout is not found"
           
           # Check the version of docker-scout to ensure it's installed correctly
-          docker scout --version || echo "docker scout command failed to run"
+          docker scout version || echo "docker scout command failed to run"
 
       - name: Pull and Scan Docker Image
         run: |
