@@ -33,6 +33,9 @@ jobs:
           # Extract the scout binary to /usr/local/bin
           sudo tar -xzf /tmp/docker-scout.tar.gz -C /usr/local/bin
           
+          # List the files in /usr/local/bin to verify that the scout binary is extracted
+          sudo ls -alh /usr/local/bin
+          
           # Ensure that the binary is executable
           sudo chmod +x /usr/local/bin/scout
 
